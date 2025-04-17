@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title><%= title %></title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <link rel="stylesheet" href="/css/style.css" />
+  <link rel="stylesheet" href="/css/checkout.css" />
+</head>
+<body>
+  <%- include('partials/header') %>
+
+  <main>
+    <h1>Checkout</h1>
+    
+    <div class="checkout-container">
+      <div class="checkout-form">
+        <h2>Delivery Details</h2>
+        <form id="checkout-form">
+          <div class="form-group">
+            <label for="customerName">Full Name *</label>
+            <input type="text" id="customerName" name="customerName" required>
+            <span class="error-message" id="name-error"></span>
+          </div>
+          
+          <div class="form-group">
+            <label for="address">Delivery Address *</label>
+            <textarea id="address" name="address" required></textarea>
+            <span class="error-message" id="address-error"></span>
+          </div>
+          
+          <div class="form-group">
+            <label for="mobile">Mobile Number *</label>
+            <input type="tel" id="mobile" name="mobile" placeholder="e.g., 0400123456" required>
+            <span class="error-message" id="mobile-error"></span>
+          </div>
+          
+          <div class="form-group">
+            <label for="email">Email Address *</label>
+            <input type="email" id="email" name="email" required>
+            <span class="error-message" id="email-error"></span>
+          </div>
+          
+          <div class="form-submit">
+            <button type="submit" class="btn-primary">Place Order</button>
+          </div>
+        </form>
+      </div>
+      
+      <div class="order-summary">
+        <h2>Order Summary</h2>
+        
+        <div class="order-items">
+          <% cart.items.forEach(item => { %>
+            <div class="order-item">
+              <div class="item-info">
+                <img src="<%= item.image %>" alt="<%= item.name %>">
+                <div>
+                  <h3><%= item.name %></h3>
+                  <p><%= item.unit %> x <%= item.quantity %></p>
+                </div>
+              </div>
+              <div class="item-price">$<%= (item.price * item.quantity).toFixed(2) %></div>
+            </div>
+          <% }) %>
+        </div>
+        
+        <div class="order-total">
+          <h3>Total</h3>
+          <h3>$<%= cart.total.toFixed(2) %></h3>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <%- include('partials/footer') %>
+  
+  <script src="/js/checkout.js"></script>
+</body>
+</html>

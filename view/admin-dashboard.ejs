@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title><%= title %></title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <link rel="stylesheet" href="/css/style.css" />
+  <link rel="stylesheet" href="/css/admin.css" />
+</head>
+<body>
+  <%- include('partials/admin-header') %>
+
+  <main>
+    <div class="admin-container">
+      <h1>Order Management</h1>
+      
+      <div class="admin-filters">
+        <input type="text" id="orderSearch" placeholder="Search by customer name or email...">
+      </div>
+      
+      <table class="orders-table">
+        <thead>
+          <tr>
+            <th>Order ID</th>
+            <th>Customer</th>
+            <th>Email</th>
+            <th>Mobile</th>
+            <th>Date</th>
+            <th>Items</th>
+            <th>Total</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% if (orders.length === 0) { %>
+            <tr>
+              <td colspan="8" class="no-orders">No orders found</td>
+            </tr>
+          <% } else { %>
+            <% orders.forEach(order => { %>
+              <tr>
+                <td><%= order.id %></td>
+                <td><%= order.customer_name %></td>
+                <td><%= order.email %></td>
+                <td><%= order.mobile %></td>
+                <td><%= new Date(order.created_at).toLocaleString() %></td>
+                <td><%= order.item_count %></td>
+                <td>$<%= order.total_amount.toFixed(2) %></td>
+                <td>
+                  <a href="/admin/order/<%= order.id %>" class="view-btn">
+                    <i class="fas fa-eye"></i> View
+                  </a>
+                </td>
+              </tr>
+            <% }) %>
+          <% } %>
+        </tbody>
+      </table>
+    </div>
+  </main>
+
+  <%- include('partials/footer') %>
+  
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const searchInput = document.getElementById('orderSearch');
+      const tableRows = document.querySelectorAll('.orders-table tbody tr');
+      
+      searchInput.addEventListener('input', function() {
+        const searchTerm = this.value.toLowerCase();
+        
+        tableRows.forEach(row => {
+          const customerName = row.children[1].textContent.toLowerCase();
+          const customerEmail = row.children[2].textContent.toLowerCase();
+          
+          if (customerName.includes(searchTerm) || customerEmail.includes(searchTerm)) {
+            row.style.display = '';
+          } else {
+            row.style.display = 'none';
+          }
+        });
+      });
+    });
+  </script>
+</body>
+</html>

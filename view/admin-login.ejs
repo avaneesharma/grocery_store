@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title><%= title %></title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <link rel="stylesheet" href="/css/style.css" />
+  <link rel="stylesheet" href="/css/admin.css" />
+</head>
+<body>
+  <header class="admin-header">
+    <div class="logo">
+      <a href="/"><img src="/images/logo.png" alt="Food Mart Grocery Store" /></a>
+    </div>
+    <h1>Admin Portal</h1>
+  </header>
+
+  <main>
+    <div class="login-container">
+      <div class="login-form">
+        <h2>Admin Login</h2>
+        
+        <% if (typeof error !== 'undefined') { %>
+          <div class="error-message">
+            <%= error %>
+          </div>
+        <% } %>
+        
+        <form action="/admin/login" method="POST">
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" required>
+          </div>
+          
+          <div class="form-group">
+            <label for="mobile">Mobile</label>
+            <input type="text" id="mobile" name="mobile" required>
+          </div>
+          
+          <div class="form-submit">
+            <button type="submit" class="btn-primary">Login</button>
+          </div>
+        </form>
+        
+        <div class="back-link">
+          <a href="/">Back to Store</a>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Food Mart Grocery Store</p>
+  </footer>
+</body>
+</html>

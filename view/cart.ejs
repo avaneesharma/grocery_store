@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title><%= title %></title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <link rel="stylesheet" href="/css/style.css" />
+  <link rel="stylesheet" href="/css/cart.css" />
+</head>
+<body>
+  <%- include('partials/header') %>
+
+  <main>
+    <h1>Your Shopping Cart</h1>
+    
+    <div class="cart-container">
+      <% if (cart.items.length === 0) { %>
+        <div class="empty-cart">
+          <i class="fas fa-shopping-cart fa-4x"></i>
+          <p>Your cart is empty</p>
+          <a href="/" class="btn-primary">Continue Shopping</a>
+        </div>
+      <% } else { %>
+        <div class="cart-items">
+          <div class="cart-header">
+            <div class="product-info">Product</div>
+            <div class="price">Price</div>
+            <div class="quantity">Quantity</div>
+            <div class="subtotal">Subtotal</div>
+            <div class="remove">Remove</div>
+          </div>
+          
+          <% cart.items.forEach(item => { %>
+            <div class="cart-item" data-id="<%= item.id %>">
+              <div class="product-info">
+                <img src="<%= item.image %>" alt="<%= item.name %>">
+                <div>
+                  <h3><%= item.name %></h3>
+                  <p>Unit: <%= item.unit %></p>
+                </div>
+              </div>
+              <div class="price">$<%= item.price.toFixed(2) %></div>
+              <div class="quantity">
+                <button class="qty-btn decrease">-</button>
+                <input type="number" value="<%= item.quantity %>" min="1" class="qty-input">
+                <button class="qty-btn increase">+</button>
+              </div>
+              <div class="subtotal">$<%= (item.price * item.quantity).toFixed(2) %></div>
+              <div class="remove">
+                <button class="remove-btn"><i class="fas fa-trash"></i></button>
+              </div>
+            </div>
+          <% }) %>
+        </div>
+        
+        <div class="cart-summary">
+          <div class="cart-total">
+            <h2>Order Summary</h2>
+            <div class="total-row">
+              <span>Total:</span>
+              <span class="total-price">$<%= cart.total.toFixed(2) %></span>
+            </div>
+            <div class="cart-buttons">
+              <button id="clear-cart" class="btn-secondary">Clear Cart</button>
+              <a href="/checkout" class="btn-primary">Checkout</a>
+            </div>
+          </div>
+        </div>
+      <% } %>
+    </div>
+  </main>
+
+  <%- include('partials/footer') %>
+  
+  <script src="/js/cart.js"></script>
+</body>
+</html>
